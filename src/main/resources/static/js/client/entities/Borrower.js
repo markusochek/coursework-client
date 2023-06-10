@@ -4,7 +4,6 @@ export class Borrower {
 	fullName;
 	
 	dateOfBirth;
-	age;
 	isSalaryProject;
 	dependents;
 	income;
@@ -15,10 +14,9 @@ export class Borrower {
 	isBankrupt;
 	scoring;
 
-	constructor(fullName, dateOfBirth, age, isSalaryProject, dependents, income, confirmation, isDelayOfMoreThan20Days, isBankrupt, scoring) {
+	constructor(fullName, dateOfBirth, isSalaryProject, dependents, income, confirmation, isDelayOfMoreThan20Days, isBankrupt, scoring) {
 		this.fullName = fullName || new FullName();
 		this.dateOfBirth = dateOfBirth || new Date();
-		this.age = age || 0;
 		this.isSalaryProject = isSalaryProject || false;
 		this.dependents = dependents || 0;
 		this.income = income || 0;
@@ -26,6 +24,11 @@ export class Borrower {
 		this.isDelayOfMoreThan20Days = isDelayOfMoreThan20Days || false;
 		this.isBankrupt = isBankrupt || false;
 		this.scoring = scoring || 0;
+	}
+
+
+	getLabels() {
+		return ["ФИО", "Дата рождения", "ЗП проект", "Иждивенцы", "Доход", "Подтверждение","Просрочка >20д", "Банкрот", "Скоринг"];
 	}
 
 	toString() {

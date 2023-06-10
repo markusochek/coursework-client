@@ -1,11 +1,11 @@
-import {NewAnalysis} from "./NewAnalysis.js";
+import {Client} from "./client/Client.js";
 import {Server} from "./Server.js";
 
 export class Index {
     static pageHTML = document.createElement("pageHTML");
 
     static server = new Server()
-    static newAnalysis = new NewAnalysis(Index.pageHTML, Index.server)
+    static newAnalysis = new Client(Index.pageHTML, Index.server)
 
     static run() {
         document.body.append(Index.pageHTML);
