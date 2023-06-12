@@ -11,7 +11,7 @@ export class User {
         return ["Логин", "Пароль"]
     }
 
-    span() {
-        return 2
-    };
+    span = () => {
+        return 1;
+    }
 }

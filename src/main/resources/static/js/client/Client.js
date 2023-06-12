@@ -10,6 +10,10 @@ export class Client {
     static numberOfColumns = ConstructorDisplay.NUMBERS_OF_COLUMNS;
     static numberOfRows = ConstructorDisplay.NUMBERS_OF_ROWS;
 
+    static borrower;
+    static coBorrower;
+    static borrowersIncome;
+
     static page = () => {
         ConstructorDisplay.pageHTML.innerHTML = null;
         ConstructorDisplay.setColumnsRows(Client.numberOfColumns, Client.numberOfRows)
@@ -21,16 +25,16 @@ export class Client {
     }
 
     static showBorrowers() {
-        let borrower = new Borrower();
-        let coBorrower = new Borrower();
+        Client.borrower = new Borrower();
+        Client.coBorrower = new Borrower();
         let object = {}
         let counter = 0
         let labels = []
-        for (let keyElement in borrower) {
-            labels.push(borrower.getLabels()[counter])
-            labels.push(borrower.getLabels()[counter])
-            object[keyElement + "1"] = borrower[keyElement]
-            object[keyElement + "2"] = coBorrower[keyElement]
+        for (let keyElement in Client.borrower) {
+            labels.push(Client.borrower.getLabels()[counter])
+            labels.push(Client.borrower.getLabels()[counter])
+            object[keyElement + "1"] = Client.borrower[keyElement]
+            object[keyElement + "2"] = Client.coBorrower[keyElement]
             ++counter
         }
         object.getLabels = () => {return labels}
@@ -39,11 +43,24 @@ export class Client {
     }
 
     static showBorrowersIncome() {
-        let borrowersIncome = new BorrowersIncome();
-        ConstructorDisplay.showObject(borrowersIncome);
+        Client.borrowersIncome = new BorrowersIncome();
+        ConstructorDisplay.showObject(Client.borrowersIncome);
     }
 
     static request = () => {
-        Server.newAnalysis(this.inputs.values())
+        let object = {}
+        let counter = 0
+        for (let keyElement in Client.borrower) {
+            object[keyElement + "1"] = Client.borrower[keyElement]
+            object[keyElement + "2"] = Client.coBorrower[keyElement]
+            ++counter
+        }
+
+        Server.POST(
+            'client',
+            ConstructorDisplay.wrapObjects([object, Client.borrowersIncome]),
+            'client successful',
+            'client error')
+            .then(response => console.log(response))
     }
 }

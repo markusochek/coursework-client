@@ -17,8 +17,4 @@ export class AuthenticationDisplay {
             ConstructorDisplay.showButton(buttonNames[i], buttonFunctions[i], 1);
         }
     }
-
-    request = () => {
-        this.server.newAnalysis(this.inputs.values())
-    }
 }

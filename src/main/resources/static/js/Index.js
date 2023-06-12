@@ -20,7 +20,7 @@ export class Index {
     }
 
      static page = () => {
-         ConstructorDisplay.showButton("Добавить данные", Client.page, 1);
+         ConstructorDisplay.showButton("Добавить данные", AuthenticationDisplay.page, 1);
      }
 }
 

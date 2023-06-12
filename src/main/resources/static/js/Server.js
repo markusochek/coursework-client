@@ -2,27 +2,27 @@ import {Status} from "./client/enumerations/Status.js";
 
 export class Server {
 
-    static async POST(object, url) {
-        const response = await fetch(url, {
-            method: "POST",
+    static async POST(path, object, OkMessage, ErrorMessage) {
+        let request = await fetch(`api/${path}`,
+            {method: "POST",
             headers: {'Content-Type': 'application/json;charset=utf-8'},
             body: JSON.stringify(object)
         });
-
-        return await response.json();
-    }
-
-    static async GET(url) {
-        const response = await fetch(url);
-        return await response.json();
-    }
-
-    static async newAnalysis(values) {
-        const response = await Server.POST(values, `api/newAnalysis`)
+        let response = await request.json();
 
         switch (response.status) {
-            case Status.OK: return ""
-            case Status.ERROR: return ""
+            case Status.OK: return OkMessage
+            case Status.ERROR: return ErrorMessage
+        }
+    }
+
+    static async GET(path, OkMessage, ErrorMessage) {
+        let request = await fetch(`api/${path}`);
+        let response = await request.json();
+
+        switch (response.status) {
+            case Status.OK: return OkMessage
+            case Status.ERROR: return ErrorMessage
         }
     }
 }

@@ -19,13 +19,17 @@ export class RegistrationDisplay {
         ConstructorDisplay.pageHTML.innerHTML = null;
         ConstructorDisplay.setColumnsRows(RegistrationDisplay.numberOfColumns, RegistrationDisplay.numberOfRows)
 
-        RegistrationDisplay.user.span = () => {return 1;}
         ConstructorDisplay.showObject(RegistrationDisplay.user);
 
         ConstructorDisplay.showButton("Зарегистрироваться", RegistrationDisplay.request, 1);
     }
 
     static request = () => {
-        Server.newAnalysis(this.inputs.values())
+        Server.POST(
+            'registration',
+            ConstructorDisplay.wrapObjects([RegistrationDisplay.user]),
+            'registration successful',
+            'registration error')
+            .then(response => console.log(response))
     }
 }

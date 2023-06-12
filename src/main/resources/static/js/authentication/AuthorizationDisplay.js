@@ -17,7 +17,6 @@ export class AuthorizationDisplay {
         ConstructorDisplay.pageHTML.innerHTML = null;
         ConstructorDisplay.setColumnsRows(AuthorizationDisplay.numberOfColumns, AuthorizationDisplay.numberOfRows)
 
-        AuthorizationDisplay.user.span = () => {return 1;}
         ConstructorDisplay.showObject(AuthorizationDisplay.user);
 
         ConstructorDisplay.showButton("Авторизоваться", AuthorizationDisplay.request, 1);
@@ -25,6 +24,11 @@ export class AuthorizationDisplay {
 
 
     static request = () => {
-        Server.newAnalysis(this.inputs.values())
+        Server.POST(
+            'authorization',
+            ConstructorDisplay.wrapObjects([AuthorizationDisplay.user]),
+            'authorization successful',
+            'authorization error')
+            .then(response => console.log(response))
     }
 }
