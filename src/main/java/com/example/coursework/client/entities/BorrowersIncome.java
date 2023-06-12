@@ -1,4 +1,4 @@
-package com.example.coursework.newAnalysis;
+package com.example.coursework.client.entities;
 
 import enums.VerificationResult;
 import lombok.*;

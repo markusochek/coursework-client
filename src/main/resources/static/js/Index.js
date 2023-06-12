@@ -2,7 +2,8 @@ import {Client} from "./client/Client.js";
 import {AuthenticationDisplay} from "./authentication/AuthenticationDisplay.js";
 import {AuthorizationDisplay} from "./authentication/AuthorizationDisplay.js";
 import {RegistrationDisplay} from "./authentication/RegistrationDisplay.js";
-import {ConstructorDisplay} from "./ConstructorDisplay.js";
+import {Status} from "./client/enumerations/Status.js";
+import {Server} from "./Server.js";
 
 export class Index {
     static {
@@ -20,7 +21,19 @@ export class Index {
     }
 
      static page = () => {
-         ConstructorDisplay.showButton("Добавить данные", AuthenticationDisplay.page, 1);
+        Server.POST(
+            'checkCookie',
+            {name: "token"})
+            .then(response => {
+                switch (response.status) {
+                    case Status.OK:
+                        Client.page();
+                        break;
+                    case Status.ERROR:
+                        AuthenticationDisplay.page();
+                        break;
+                }
+            })
      }
 }
 

@@ -1,4 +1,4 @@
-package enums;
+package com.example.coursework.client.enumerations;
 
 public enum LoanProgram {
     ДОМРФ_ВТОРИЧНОЕ_ЖИЛЬЕ,

@@ -1,6 +1,8 @@
 import {ConstructorDisplay} from "../ConstructorDisplay.js";
 import {User} from "./entities/User.js";
 import {Server} from "../Server.js";
+import {Status} from "../client/enumerations/Status.js";
+import {AuthorizationDisplay} from "./AuthorizationDisplay.js";
 
 
 export class RegistrationDisplay {
@@ -25,11 +27,22 @@ export class RegistrationDisplay {
     }
 
     static request = () => {
+        let object = ConstructorDisplay.wrapObjects([RegistrationDisplay.user])
+        object.name = object.login;
+        object.token = "";
+
         Server.POST(
             'registration',
-            ConstructorDisplay.wrapObjects([RegistrationDisplay.user]),
-            'registration successful',
-            'registration error')
-            .then(response => console.log(response))
+            object)
+            .then(response => {
+                switch (response.status) {
+                    case Status.OK:
+                        AuthorizationDisplay.page()
+                        break;
+                    case Status.ERROR:
+                        console.log('registration error');
+                        break;
+                }
+            })
     }
 }

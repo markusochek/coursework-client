@@ -1,7 +1,8 @@
 import {ConstructorDisplay} from "../ConstructorDisplay.js";
 import {User} from "./entities/User.js";
 import {Server} from "../Server.js";
-
+import {Client} from "../client/Client.js";
+import {Status} from "../client/enumerations/Status.js";
 
 export class AuthorizationDisplay {
     static numberOfColumns = ConstructorDisplay.NUMBERS_OF_COLUMNS;
@@ -24,11 +25,25 @@ export class AuthorizationDisplay {
 
 
     static request = () => {
+        let object = ConstructorDisplay.wrapObjects([AuthorizationDisplay.user])
+        object.name = object.login;
+        object.token = "";
+
         Server.POST(
             'authorization',
-            ConstructorDisplay.wrapObjects([AuthorizationDisplay.user]),
-            'authorization successful',
-            'authorization error')
-            .then(response => console.log(response))
+            object)
+
+            .then((response) => {
+                switch (response.status) {
+                    case Status.OK:
+                        Server.POST('setCookie',
+                            {name: "token", value: response.data[0]})
+                            .then(() => Client.page())
+                        break;
+                    case Status.ERROR:
+                        console.log('authorization error');
+                        break;
+                }
+            })
     }
 }

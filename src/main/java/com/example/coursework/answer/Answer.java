@@ -1,9 +1,8 @@
 package com.example.coursework.answer;
 
-import com.example.coursework.newAnalysis.GeneralInformation;
+import com.example.coursework.authentication.enumerations.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,17 +18,17 @@ import java.util.List;
 public class Answer <T> {
 
     private Status status;
-    private List<T> jsonResponse;
+    private List<T> data;
 
     public Answer(Status status) {
         this.status = status;
-        this.jsonResponse = null;
+        this.data = null;
     }
 
-    public Answer(Status status, T jsonResponse) {
+    public Answer(Status status, T data) {
         this.status = status;
-        this.jsonResponse = new ArrayList<>();
-        this.jsonResponse.add(jsonResponse);
+        this.data = new ArrayList<>();
+        this.data.add(data);
 
     }
 
@@ -39,11 +38,11 @@ public class Answer <T> {
         return objectMapper.writeValueAsString(answer);
     }
 
-//    public String json(Status status) throws JsonProcessingException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Answer<String> answer = new Answer<>(status);
-//        return objectMapper.writeValueAsString(answer);
-//    }
+    public String json(Status status) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Answer<String> answer = new Answer<>(status);
+        return objectMapper.writeValueAsString(answer);
+    }
 //
 //    public String json(Status status, T response) throws JsonProcessingException {
 //        ObjectMapper objectMapper = new ObjectMapper();

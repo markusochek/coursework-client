@@ -4,6 +4,8 @@ import {BorrowersIncome} from "./entities/BorrowersIncome.js";
 import {Borrower} from "./entities/Borrower.js";
 import {ConstructorDisplay} from "../ConstructorDisplay.js";
 import {Server} from "../Server.js";
+import {Status} from "./enumerations/Status.js";
+import {AuthenticationDisplay} from "../authentication/AuthenticationDisplay.js";
 
 
 export class Client {
@@ -58,9 +60,16 @@ export class Client {
 
         Server.POST(
             'client',
-            ConstructorDisplay.wrapObjects([object, Client.borrowersIncome]),
-            'client successful',
-            'client error')
-            .then(response => console.log(response))
+            ConstructorDisplay.wrapObjects([object, Client.borrowersIncome]))
+            .then(response => {
+                switch (response.status) {
+                    case Status.OK:
+                        console.log('YESSSSSSSSSSS');
+                        break;
+                    case Status.ERROR:
+                        console.log('client error');
+                        break;
+                }
+            })
     }
 }

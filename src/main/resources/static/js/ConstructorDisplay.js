@@ -94,7 +94,6 @@ export class ConstructorDisplay {
     static wrapObjects(objects) {
         let keys = []
         let bodyObject = {};
-        console.log(objects)
         for (const [index, object] of objects.entries()) {
             keys.push([])
             for (const objectKey in object) {
@@ -106,14 +105,12 @@ export class ConstructorDisplay {
 
         for(const key of keys) {
             [].forEach.call(ConstructorDisplay.pageHTML.childNodes, function(childNode, index) {
-                console.log(childNode.childNodes[0])
                 if (childNode.childNodes[0].nodeName !== 'BUTTON') {
                     bodyObject[key[index]] = childNode.childNodes[1].value
                 }
             });
         }
 
-        console.log(bodyObject)
         return bodyObject;
     }
 }

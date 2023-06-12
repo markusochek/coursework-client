@@ -1,4 +1,4 @@
-package com.example.coursework.newAnalysis;
+package com.example.coursework.client.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Guarantee {
-    private boolean isGuarantee;
-    private FullName fullName;
+public class FullName {
+	private String lastName;
+	private String firstName;
+	private String patronymic;
 }
