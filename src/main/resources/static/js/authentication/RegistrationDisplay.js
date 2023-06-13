@@ -27,13 +27,11 @@ export class RegistrationDisplay {
     }
 
     static request = () => {
-        let object = ConstructorDisplay.wrapObjects([RegistrationDisplay.user])
-        object.name = object.login;
-        object.token = "";
+        let object = ConstructorDisplay.wrapObjects({user: RegistrationDisplay.user})
+        object.user.name = object.user.login;
+        object.user.token = "";
 
-        Server.POST(
-            'registration',
-            object)
+        Server.POST('registration', object.user)
             .then(response => {
                 switch (response.status) {
                     case Status.OK:

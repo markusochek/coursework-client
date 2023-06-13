@@ -17,7 +17,8 @@ public class ConfigurationApplication {
         return new Answer<>();
     }
     @Bean
-    Answer<Client> answerClient() {
+    Answer<Object> answerObject() {
         return new Answer<>();
     }
+
 }

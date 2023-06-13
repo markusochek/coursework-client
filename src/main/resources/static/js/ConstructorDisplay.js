@@ -92,23 +92,31 @@ export class ConstructorDisplay {
     }
 
     static wrapObjects(objects) {
-        let keys = []
+        let keys = {}
         let bodyObject = {};
-        for (const [index, object] of objects.entries()) {
-            keys.push([])
+        let k = 0;
+        for (const objectsKey in objects) {
+            let object = objects[objectsKey]
+            keys[objectsKey] = [];
             for (const objectKey in object) {
                 if(typeof object[objectKey] != 'function') {
-                    keys[index].push(objectKey)
+                    keys[objectsKey].push(objectKey);
                 }
             }
+            k++;
         }
 
-        for(const key of keys) {
-            [].forEach.call(ConstructorDisplay.pageHTML.childNodes, function(childNode, index) {
-                if (childNode.childNodes[0].nodeName !== 'BUTTON') {
-                    bodyObject[key[index]] = childNode.childNodes[1].value
+        let childNodes = ConstructorDisplay.pageHTML.childNodes;
+        let i = 0;
+        for (const keyKey in keys) {
+            bodyObject[keyKey] = {}
+            for (let j = 0; j < keys[keyKey].length;) {
+                if (childNodes[i].childNodes[0].nodeName !== 'BUTTON') {
+                    bodyObject[keyKey][keys[keyKey][j]] = childNodes[i].childNodes[1].value;
+                    j++;
                 }
-            });
+                i++;
+            }
         }
 
         return bodyObject;

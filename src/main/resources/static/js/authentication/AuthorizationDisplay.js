@@ -25,13 +25,11 @@ export class AuthorizationDisplay {
 
 
     static request = () => {
-        let object = ConstructorDisplay.wrapObjects([AuthorizationDisplay.user])
-        object.name = object.login;
-        object.token = "";
+        let object = ConstructorDisplay.wrapObjects({user: AuthorizationDisplay.user})
+        object.user.name = object.user.login;
+        object.user.token = "";
 
-        Server.POST(
-            'authorization',
-            object)
+        Server.POST('authorization', object.user)
 
             .then((response) => {
                 switch (response.status) {

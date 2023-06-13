@@ -20,10 +20,26 @@ export class Client {
         ConstructorDisplay.pageHTML.innerHTML = null;
         ConstructorDisplay.setColumnsRows(Client.numberOfColumns, Client.numberOfRows)
 
+        ConstructorDisplay.showButton("Выйти", Client.requestExit, 1);
+
         Client.showBorrowers();
         Client.showBorrowersIncome();
 
         ConstructorDisplay.showButton("Добавить", Client.request, 1);
+    }
+    static requestExit() {
+        Server.POST('unsetCookie', {name: 'token'}).then(
+            response => {
+                switch (response.status) {
+                    case Status.OK:
+                        AuthenticationDisplay.page();
+                        break;
+                    case Status.ERROR:
+                        console.log('unsetCookie error');
+                        break;
+                }
+            }
+        )
     }
 
     static showBorrowers() {
@@ -50,26 +66,39 @@ export class Client {
     }
 
     static request = () => {
-        let object = {}
+        let borrowers = {}
         let counter = 0
         for (let keyElement in Client.borrower) {
-            object[keyElement + "1"] = Client.borrower[keyElement]
-            object[keyElement + "2"] = Client.coBorrower[keyElement]
+            borrowers[keyElement + "1"] = Client.borrower[keyElement]
+            borrowers[keyElement + "2"] = Client.coBorrower[keyElement]
             ++counter
         }
 
-        Server.POST(
-            'client',
-            ConstructorDisplay.wrapObjects([object, Client.borrowersIncome]))
-            .then(response => {
-                switch (response.status) {
-                    case Status.OK:
-                        console.log('YESSSSSSSSSSS');
-                        break;
-                    case Status.ERROR:
-                        console.log('client error');
-                        break;
-                }
-            })
+        let object = ConstructorDisplay.wrapObjects({borrowers: borrowers, borrowersIncome: Client.borrowersIncome});
+        let borrower = {}
+        let coBorrower = {}
+        let i = 0;
+        for (const objectKey in object.borrowers) {
+            let purifiedObjectKey = objectKey.replace(/[0-9]/g, '')
+            if (i % 2 === 0) {
+                borrower[purifiedObjectKey] = object.borrowers[objectKey];
+            } else {
+                coBorrower[purifiedObjectKey] = object.borrowers[objectKey];
+            }
+            i++;
+        }
+
+        object = {borrower: borrower, coBorrower: coBorrower, borrowersIncome: object.borrowersIncome}
+        Server.POST('client', object)
+                .then(response => {
+                    switch (response.status) {
+                        case Status.OK:
+                            console.log('YESSSSSSSSSSS');
+                            break;
+                        case Status.ERROR:
+                            console.log('client error');
+                            break;
+                    }
+                })
     }
 }

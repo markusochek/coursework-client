@@ -1,4 +1,4 @@
-package com.example.coursework.client.entities;
+package com.example.coursework.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
