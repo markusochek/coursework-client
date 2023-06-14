@@ -2,8 +2,8 @@ package com.example.coursework.client;
 
 import com.example.coursework.answer.Answer;
 import com.example.coursework.authentication.enumerations.Status;
-import com.example.coursework.client.borrower.Borrower;
-import com.example.coursework.client.borrowerIncome.BorrowersIncome;
+import com.example.coursework.client.entities.borrower.Borrower;
+import com.example.coursework.client.entities.borrowerIncome.BorrowersIncome;
 import com.example.coursework.cookies.CookieController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;

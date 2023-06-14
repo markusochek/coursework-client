@@ -1,7 +1,5 @@
-package com.example.coursework.client.borrower;
+package com.example.coursework.client.entities.borrower;
 
-import com.example.coursework.client.FullName;
-import com.example.coursework.client.enumerations.Confirmation;
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.simple.JSONObject;
@@ -9,7 +7,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.lang.reflect.Field;
-import java.util.GregorianCalendar;
 
 @Entity
 @AllArgsConstructor

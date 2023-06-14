@@ -43,16 +43,4 @@ public class Answer <T> {
         Answer<String> answer = new Answer<>(status);
         return objectMapper.writeValueAsString(answer);
     }
-//
-//    public String json(Status status, T response) throws JsonProcessingException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Answer<T> answer = new Answer<>(status, response);
-//        return objectMapper.writeValueAsString(answer);
-//    }
-//
-//    public String json(Status status, List<T> response) throws JsonProcessingException {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        Answer<T> answer = new Answer<>(status, response);
-//        return objectMapper.writeValueAsString(answer);
-//    }
 }

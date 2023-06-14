@@ -1,9 +1,9 @@
 package com.example.coursework.client;
 
-import com.example.coursework.client.borrower.Borrower;
-import com.example.coursework.client.borrower.BorrowerRepository;
-import com.example.coursework.client.borrowerIncome.BorrowerIncomeRepository;
-import com.example.coursework.client.borrowerIncome.BorrowersIncome;
+import com.example.coursework.client.entities.borrower.Borrower;
+import com.example.coursework.client.entities.borrower.BorrowerRepository;
+import com.example.coursework.client.entities.borrowerIncome.BorrowerIncomeRepository;
+import com.example.coursework.client.entities.borrowerIncome.BorrowersIncome;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

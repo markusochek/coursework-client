@@ -1,7 +1,5 @@
-package com.example.coursework.client.borrowerIncome;
+package com.example.coursework.client.entities.borrowerIncome;
 
-import com.example.coursework.client.borrower.Borrower;
-import com.example.coursework.client.enumerations.VerificationResult;
 import jakarta.persistence.*;
 import lombok.*;
 import org.json.simple.JSONObject;
