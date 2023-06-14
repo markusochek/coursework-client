@@ -1,5 +1,6 @@
 package com.example.coursework.client.borrowerIncome;
 
+import com.example.coursework.client.borrower.Borrower;
 import com.example.coursework.client.enumerations.VerificationResult;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,13 +28,22 @@ public class BorrowersIncome {
 	private String verificationResult;
 
 	public BorrowersIncome(Object borrowersIncome) throws ParseException, IllegalAccessException {
-		BorrowersIncome newBorrowersIncome = new BorrowersIncome();
-		Field[] newFields = newBorrowersIncome.getClass().getDeclaredFields();
+		BorrowersIncome newBorrowersIncome = this;
+		Field[] fields = newBorrowersIncome.getClass().getDeclaredFields();
 		JSONObject jo = (JSONObject)(new JSONParser().parse(borrowersIncome.toString()));
+		for (int i = 1; i < fields.length; i++) {
+			if (fields[i].getType().equals(int.class)) {
+				fields[i].setInt(newBorrowersIncome, Integer.parseInt(jo.get(fields[i].getName()).toString()));
 
-		Field[] fields = BorrowersIncome.class.getFields();
-		for (int i = 0; i < fields.length; i++) {
-			newFields[i].set(newBorrowersIncome, jo.get(fields[i].getName()));
+			} else if (fields[i].getType().equals(boolean.class)) {
+				fields[i].setBoolean(newBorrowersIncome, Boolean.parseBoolean(jo.get(fields[i].getName()).toString()));
+
+			} else if (fields[i].getType().equals(double.class)) {
+				fields[i].setDouble(newBorrowersIncome, Double.parseDouble(jo.get(fields[i].getName()).toString()));
+
+			} else {
+				fields[i].set(newBorrowersIncome, jo.get(fields[i].getName()));
+			}
 		}
 	}
 }

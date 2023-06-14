@@ -105,20 +105,25 @@ export class ConstructorDisplay {
             }
             k++;
         }
-
         let childNodes = ConstructorDisplay.pageHTML.childNodes;
         let i = 0;
         for (const keyKey in keys) {
             bodyObject[keyKey] = {}
             for (let j = 0; j < keys[keyKey].length;) {
                 if (childNodes[i].childNodes[0].nodeName !== 'BUTTON') {
-                    bodyObject[keyKey][keys[keyKey][j]] = childNodes[i].childNodes[1].value;
+                    let purifiedObjectKey = keys[keyKey][j].replace(/[0-9]/g, '')
+                    let enumeration = Enumerations.getEnumeration(purifiedObjectKey);
+                    if (enumeration) {
+                        bodyObject[keyKey][keys[keyKey][j]] =
+                            Enumerations.getKeyByValue(enumeration, childNodes[i].childNodes[1].value);
+                    } else {
+                        bodyObject[keyKey][keys[keyKey][j]] = childNodes[i].childNodes[1].value;
+                    }
                     j++;
                 }
                 i++;
             }
         }
-
         return bodyObject;
     }
 }

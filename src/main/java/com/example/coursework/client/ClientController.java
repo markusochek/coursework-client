@@ -29,11 +29,9 @@ public class ClientController {
             Borrower borrower = new Borrower(jo.get("borrower"));
             Borrower coBorrower = new Borrower(jo.get("coBorrower"));
             BorrowersIncome borrowersIncome = new BorrowersIncome(jo.get("borrowersIncome"));
-            return borrowersIncome;
+
+            return answerObject.json(Status.OK, clientService.addClient(borrower, coBorrower, borrowersIncome));
         }
-//            return answerObject.json(Status.OK, clientService.addClient(borrower, coBorrower, borrowersIncome));
-//        }
-//        return answerObject.json(Status.ERROR);
-        return null;
+        return answerObject.json(Status.ERROR);
     }
 }

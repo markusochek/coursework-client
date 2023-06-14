@@ -34,21 +34,29 @@ public class Borrower {
 	@Column
 	private String confirmation;
 	@Column
-	private boolean isDelayOfMoreThan20Days;
+	private boolean isDelayOfMoreThanDays;
 	@Column
 	private boolean isBankrupt;
 	@Column
 	private int scoring;
 
     public Borrower(Object borrower) throws ParseException, IllegalAccessException {
-		Borrower newBorrower = new Borrower();
-		Field[] newFields = newBorrower.getClass().getDeclaredFields();
+		Borrower newBorrower = this;
+		Field[] fields = newBorrower.getClass().getDeclaredFields();
 		JSONObject jo = (JSONObject)(new JSONParser().parse(borrower.toString()));
+		for (int i = 1; i < fields.length; i++) {
+			if (fields[i].getType().equals(int.class)) {
+				fields[i].setInt(newBorrower, Integer.parseInt(jo.get(fields[i].getName()).toString()));
 
-		Field[] fields = Borrower.class.getDeclaredFields();
-		System.out.println(fields.length);
-		for (int i = 0; i < fields.length; i++) {
-			newFields[i].set(newBorrower, jo.get(fields[i].getName()));
+			} else if (fields[i].getType().equals(boolean.class)) {
+				fields[i].setBoolean(newBorrower, Boolean.parseBoolean(jo.get(fields[i].getName()).toString()));
+
+			} else if (fields[i].getType().equals(double.class)) {
+				fields[i].setDouble(newBorrower, Double.parseDouble(jo.get(fields[i].getName()).toString()));
+
+			} else {
+				fields[i].set(newBorrower, jo.get(fields[i].getName()));
+			}
 		}
     }
 }
